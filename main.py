@@ -11,7 +11,6 @@ import datetime, os
 from tensorflow.keras.layers import *
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.optimizers import Adam
-from IPython.display import clear_output
 import tensorflow_addons as tfa
 
 # For more information about autotune:
