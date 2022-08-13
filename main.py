@@ -4,7 +4,6 @@ import argparse
 import zipfile
 import hashlib
 import requests
-import IPython.display as display
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
