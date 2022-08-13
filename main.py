@@ -126,3 +126,10 @@ def download_ade(path, overwrite=False):
         # extract
         with zipfile.ZipFile(filename,"r") as zip_ref:
             zip_ref.extractall(path=path)
+
+root = "/content/"
+dataset_path = root + "ADEChallengeData2016/images/"
+training_data = "training/"
+val_data = "validation/"
+
+download_ade(root, overwrite=False)
