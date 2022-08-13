@@ -6,4 +6,4 @@
 #SBATCH --output=result.log
 #SBATCH --mem=0
 #SBATCH --time=0
-$HOME/tensorflow_env/bin/python3 main.py > result.outx
+$HOME/tensorflow_env/bin/python3 main.py > result.out
