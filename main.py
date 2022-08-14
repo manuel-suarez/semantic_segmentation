@@ -18,6 +18,10 @@ import tensorflow_addons as tfa
 AUTOTUNE = tf.data.experimental.AUTOTUNE
 print(f"Tensorflow ver. {tf.__version__}")
 
+# important for reproducibility
+# this allows to generate the same random numbers
+SEED = 42
+
 # some helper functions to download the dataset
 # this code comes mainly from gluoncv.utils
 def check_sha1(filename, sha1_hash):
