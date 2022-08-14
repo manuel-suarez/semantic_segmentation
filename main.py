@@ -382,3 +382,27 @@ model = tf.keras.Model(inputs = inputs, outputs = output)
 model.compile(optimizer=Adam(learning_rate=0.0001), loss = tf.keras.losses.SparseCategoricalCrossentropy(),
               metrics=['accuracy'])
 model.summary()
+
+# Training test
+EPOCHS = 1
+
+STEPS_PER_EPOCH = TRAINSET_SIZE // BATCH_SIZE
+VALIDATION_STEPS = VALSET_SIZE // BATCH_SIZE
+
+# sometimes it can be very interesting to run some batches on cpu
+# because the tracing is way better than on GPU
+# you will have more obvious error message
+# but in our case, it takes A LOT of time
+
+# On CPU
+# with tf.device("/cpu:0"):
+#     model_history = model.fit(dataset['train'], epochs=EPOCHS,
+#                               steps_per_epoch=STEPS_PER_EPOCH,
+#                               validation_steps=VALIDATION_STEPS,
+#                               validation_data=dataset['val'])
+
+# On GPU
+model_history = model.fit(dataset['train'], epochs=EPOCHS,
+                          steps_per_epoch=STEPS_PER_EPOCH,
+                          validation_steps=VALIDATION_STEPS,
+                          validation_data=dataset['val'])
