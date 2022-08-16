@@ -414,7 +414,7 @@ class DisplayCallback(tf.keras.callbacks.Callback):
         show_predictions()
         print ('\nSample Prediction after epoch {}\n'.format(epoch+1))
 
-EPOCHS = 20
+EPOCHS = 100
 
 logdir = os.path.join("logs", datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
 tensorboard_callback = tf.keras.callbacks.TensorBoard(logdir, histogram_freq=1)
@@ -425,7 +425,7 @@ callbacks = [
     # to collect some useful metrics and visualize them in tensorboard
     tensorboard_callback,
     # if no accuracy improvements we can stop the training directly
-    tf.keras.callbacks.EarlyStopping(patience=10, verbose=1),
+    tf.keras.callbacks.EarlyStopping(patience=20, verbose=1),
     # to save checkpoints
     tf.keras.callbacks.ModelCheckpoint('best_model_unet.h5', verbose=1, save_best_only=True, save_weights_only=True)
 ]
