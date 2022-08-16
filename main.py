@@ -406,3 +406,42 @@ model_history = model.fit(dataset['train'], epochs=EPOCHS,
                           steps_per_epoch=STEPS_PER_EPOCH,
                           validation_steps=VALIDATION_STEPS,
                           validation_data=dataset['val'])
+
+# Training loop
+class DisplayCallback(tf.keras.callbacks.Callback):
+    def on_epoch_end(self, epoch, logs=None):
+        clear_output(wait=True)
+        show_predictions()
+        print ('\nSample Prediction after epoch {}\n'.format(epoch+1))
+
+EPOCHS = 20
+
+logdir = os.path.join("logs", datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
+tensorboard_callback = tf.keras.callbacks.TensorBoard(logdir, histogram_freq=1)
+
+callbacks = [
+    # to show samples after each epoch
+    # DisplayCallback(),
+    # to collect some useful metrics and visualize them in tensorboard
+    tensorboard_callback,
+    # if no accuracy improvements we can stop the training directly
+    tf.keras.callbacks.EarlyStopping(patience=10, verbose=1),
+    # to save checkpoints
+    tf.keras.callbacks.ModelCheckpoint('best_model_unet.h5', verbose=1, save_best_only=True, save_weights_only=True)
+]
+
+model = tf.keras.Model(inputs = inputs, outputs = output)
+
+# # here I'm using a new optimizer: https://arxiv.org/abs/1908.03265
+optimizer=tfa.optimizers.RectifiedAdam(lr=1e-3)
+
+loss = tf.keras.losses.SparseCategoricalCrossentropy()
+
+model.compile(optimizer=optimizer, loss = loss,
+                  metrics=['accuracy'])
+
+model_history = model.fit(dataset['train'], epochs=EPOCHS,
+                    steps_per_epoch=STEPS_PER_EPOCH,
+                    validation_steps=VALIDATION_STEPS,
+                    validation_data=dataset['val'],
+                    callbacks=callbacks)
